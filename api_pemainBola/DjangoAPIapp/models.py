@@ -1,4 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.expressions import OrderBy
 
 # Create your models here.
 
@@ -33,3 +35,13 @@ class PemainBola(models.Model):
     def __str__(self):
         return self.nama
 
+class Favorite(models.Model):
+    favorite_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    pemainbola = models.ManyToManyField(PemainBola)
+    klub = models.ManyToManyField(Klub)
+
+    class Meta:
+        ordering = ['-favorite_id']
+
+    def __str__(self):
+        return f'(self.favorite_id)'
